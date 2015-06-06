@@ -13,6 +13,9 @@
 		32BD03341B1F148F00C9A325 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BD03331B1F148F00C9A325 /* Images.xcassets */; };
 		32BD03371B1F148F00C9A325 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BD03351B1F148F00C9A325 /* LaunchScreen.xib */; };
 		32BD03431B1F148F00C9A325 /* NewSupermarketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03421B1F148F00C9A325 /* NewSupermarketTests.m */; };
+		32BD034E1B1F1D8700C9A325 /* DBItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD034D1B1F1D8700C9A325 /* DBItemManager.m */; };
+		32BD03521B1F1E5800C9A325 /* DBPurchaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */; };
+		32BD03561B1F1EFE00C9A325 /* DBItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03551B1F1EFE00C9A325 /* DBItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +40,12 @@
 		32BD033C1B1F148F00C9A325 /* NewSupermarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewSupermarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BD03411B1F148F00C9A325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32BD03421B1F148F00C9A325 /* NewSupermarketTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewSupermarketTests.m; sourceTree = "<group>"; };
+		32BD034C1B1F1D8700C9A325 /* DBItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBItemManager.h; path = Model/DBItemManager.h; sourceTree = "<group>"; };
+		32BD034D1B1F1D8700C9A325 /* DBItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBItemManager.m; path = Model/DBItemManager.m; sourceTree = "<group>"; };
+		32BD03501B1F1E5800C9A325 /* DBPurchaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPurchaseTableViewController.h; sourceTree = "<group>"; };
+		32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPurchaseTableViewController.m; sourceTree = "<group>"; };
+		32BD03541B1F1EFE00C9A325 /* DBItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBItem.h; path = Model/DBItem.h; sourceTree = "<group>"; };
+		32BD03551B1F1EFE00C9A325 /* DBItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBItem.m; path = Model/DBItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				32BD03301B1F148F00C9A325 /* Main.storyboard */,
+				32BD034F1B1F1D8C00C9A325 /* Model */,
+				32BD03531B1F1E6700C9A325 /* Controller */,
 				32BD03331B1F148F00C9A325 /* Images.xcassets */,
 				32BD03351B1F148F00C9A325 /* LaunchScreen.xib */,
 				32BD03261B1F148F00C9A325 /* Supporting Files */,
@@ -112,6 +123,26 @@
 				32BD03411B1F148F00C9A325 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		32BD034F1B1F1D8C00C9A325 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				32BD03541B1F1EFE00C9A325 /* DBItem.h */,
+				32BD03551B1F1EFE00C9A325 /* DBItem.m */,
+				32BD034C1B1F1D8700C9A325 /* DBItemManager.h */,
+				32BD034D1B1F1D8700C9A325 /* DBItemManager.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		32BD03531B1F1E6700C9A325 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				32BD03501B1F1E5800C9A325 /* DBPurchaseTableViewController.h */,
+				32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,6 +189,7 @@
 		32BD031B1B1F148F00C9A325 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = DB;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Dmitriy Baklanov";
 				TargetAttributes = {
@@ -216,6 +248,9 @@
 			files = (
 				32BD032C1B1F148F00C9A325 /* AppDelegate.m in Sources */,
 				32BD03291B1F148F00C9A325 /* main.m in Sources */,
+				32BD03521B1F1E5800C9A325 /* DBPurchaseTableViewController.m in Sources */,
+				32BD034E1B1F1D8700C9A325 /* DBItemManager.m in Sources */,
+				32BD03561B1F1EFE00C9A325 /* DBItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +445,7 @@
 				32BD03481B1F148F00C9A325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		32BD03491B1F148F00C9A325 /* Build configuration list for PBXNativeTarget "NewSupermarketTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +454,7 @@
 				32BD034B1B1F148F00C9A325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
