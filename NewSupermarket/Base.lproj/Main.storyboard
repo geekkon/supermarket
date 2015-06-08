@@ -39,7 +39,13 @@
                             <outlet property="delegate" destination="0Vr-cC-I2m" id="2RJ-ji-Z3q"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Purchase" id="9eq-ud-htV"/>
+                    <navigationItem key="navigationItem" title="Purchase" id="9eq-ud-htV">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="jWX-u9-sTr">
+                            <connections>
+                                <action selector="generateData:" destination="0Vr-cC-I2m" id="Rwp-jg-147"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hb9-uo-F2o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

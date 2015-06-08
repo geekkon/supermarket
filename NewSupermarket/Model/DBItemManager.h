@@ -7,19 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
+@import CoreData;
+
 @class DBItem;
 
 extern NSString * const DBItemManagerDidChangeDataNotification;
 
-
 @interface DBItemManager : NSObject
 
+@property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+
 + (DBItemManager *)sharedManager;
+
+- (void)generateData; // items + categories generation
+
+
+- (DBItem *)createItem;
 
 - (NSUInteger)itemsCount;
 - (DBItem *)itemAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfItem:(DBItem *)item;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item;
+
+- (void)save;
 
 @end

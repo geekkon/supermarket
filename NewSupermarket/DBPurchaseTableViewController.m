@@ -10,7 +10,9 @@
 #import "DBItem.h"
 #import "DBItemManager.h"
 
-@interface DBPurchaseTableViewController ()
+@interface DBPurchaseTableViewController () <NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -28,7 +30,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)dealloc {
@@ -41,19 +43,57 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (NSFetchedResultsController *)fetchedResultsController {
+    
+    if (_fetchedResultsController) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    fetchRequest.entity =[NSEntityDescription entityForName:@"DBItem"
+                                     inManagedObjectContext:[DBItemManager sharedManager].managedObjectContext];
+    fetchRequest.fetchBatchSize = 20;
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                                   ascending:YES]];
+
+    
+    self.fetchedResultsController =  [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                         managedObjectContext:[DBItemManager sharedManager].managedObjectContext
+                                                                           sectionNameKeyPath:@"category.name"
+                                                                                    cacheName:nil];
+    
+    self.fetchedResultsController.delegate = self;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _fetchedResultsController;
+}
+
 #pragma mark - <UITableViewDelegate>
+
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DBItem *item = [[DBItemManager sharedManager] itemAtIndex:indexPath.row];
+//    DBItem *item = [[DBItemManager sharedManager] itemAtIndex:indexPath.row];
+    DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     [[DBItemManager sharedManager] addCount:10 toItem:item];
 }
 
 #pragma mark - <UITableViewDataSource>
 
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
@@ -63,18 +103,97 @@
     // Return the number of rows in the section.
     return [[DBItemManager sharedManager] itemsCount];
 }
+*/
+ 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [[self.fetchedResultsController sections] count];
+}
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    DBItem *item = [[DBItemManager sharedManager] itemAtIndex:indexPath.row];
-    
-    cell.textLabel.text = item.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)item.count];
+//    DBItem *item = [[DBItemManager sharedManager] itemAtIndex:indexPath.row];
+//    
+//    cell.textLabel.text = item.name;
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", item.count];
+ 
+    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+    DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.textLabel.text = item.name;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", item.count];
+}
+
+#pragma mark - Fetched results controller
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    
+    [self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            return;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
+
+
 
 
 /*
@@ -137,6 +256,11 @@
         [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                               withRowAnimation:UITableViewRowAnimationLeft];
     }
+}
+
+- (IBAction)generateData:(UIBarButtonItem *)sender {
+    
+    [[DBItemManager sharedManager] generateData];
 }
 
 @end

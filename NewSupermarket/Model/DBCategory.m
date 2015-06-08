@@ -1,20 +1,18 @@
 //
-//  DBItem.m
+//  DBCategory.m
 //  NewSupermarket
 //
 //  Created by Dim on 06.06.15.
 //  Copyright (c) 2015 Dmitriy Baklanov. All rights reserved.
 //
 
-#import "DBItem.h"
 #import "DBCategory.h"
+#import "DBItem.h"
 
 
-@implementation DBItem
+@implementation DBCategory
 
 @dynamic name;
-@dynamic info;
-@dynamic count;
-@dynamic category;
+@dynamic items;
 
 @end

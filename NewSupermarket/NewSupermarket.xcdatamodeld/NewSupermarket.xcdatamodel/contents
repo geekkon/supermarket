@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="DBCategory" representedClassName="DBCategory" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DBItem" inverseName="category" inverseEntity="DBItem" syncable="YES"/>
+    </entity>
+    <entity name="DBItem" representedClassName="DBItem" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DBCategory" inverseName="items" inverseEntity="DBCategory" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DBItem" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="DBCategory" positionX="-306" positionY="-72" width="128" height="73"/>
+    </elements>
+</model>

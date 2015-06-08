@@ -15,7 +15,9 @@
 		32BD03431B1F148F00C9A325 /* NewSupermarketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03421B1F148F00C9A325 /* NewSupermarketTests.m */; };
 		32BD034E1B1F1D8700C9A325 /* DBItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD034D1B1F1D8700C9A325 /* DBItemManager.m */; };
 		32BD03521B1F1E5800C9A325 /* DBPurchaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */; };
-		32BD03561B1F1EFE00C9A325 /* DBItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03551B1F1EFE00C9A325 /* DBItem.m */; };
+		32C2CF651B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF631B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld */; };
+		32C2CF721B233B6100BCD8DE /* DBItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF711B233B6100BCD8DE /* DBItem.m */; };
+		32C2CF751B233B6200BCD8DE /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF741B233B6200BCD8DE /* DBCategory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +46,11 @@
 		32BD034D1B1F1D8700C9A325 /* DBItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBItemManager.m; path = Model/DBItemManager.m; sourceTree = "<group>"; };
 		32BD03501B1F1E5800C9A325 /* DBPurchaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPurchaseTableViewController.h; sourceTree = "<group>"; };
 		32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPurchaseTableViewController.m; sourceTree = "<group>"; };
-		32BD03541B1F1EFE00C9A325 /* DBItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBItem.h; path = Model/DBItem.h; sourceTree = "<group>"; };
-		32BD03551B1F1EFE00C9A325 /* DBItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBItem.m; path = Model/DBItem.m; sourceTree = "<group>"; };
+		32C2CF641B22EEA900BCD8DE /* NewSupermarket.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewSupermarket.xcdatamodel; sourceTree = "<group>"; };
+		32C2CF701B233B6100BCD8DE /* DBItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBItem.h; path = Model/DBItem.h; sourceTree = "<group>"; };
+		32C2CF711B233B6100BCD8DE /* DBItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBItem.m; path = Model/DBItem.m; sourceTree = "<group>"; };
+		32C2CF731B233B6200BCD8DE /* DBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBCategory.h; path = Model/DBCategory.h; sourceTree = "<group>"; };
+		32C2CF741B233B6200BCD8DE /* DBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBCategory.m; path = Model/DBCategory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +133,8 @@
 		32BD034F1B1F1D8C00C9A325 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				32BD03541B1F1EFE00C9A325 /* DBItem.h */,
-				32BD03551B1F1EFE00C9A325 /* DBItem.m */,
+				32C2CF631B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld */,
+				32C2CF691B22F81100BCD8DE /* Entities */,
 				32BD034C1B1F1D8700C9A325 /* DBItemManager.h */,
 				32BD034D1B1F1D8700C9A325 /* DBItemManager.m */,
 			);
@@ -143,6 +148,17 @@
 				32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		32C2CF691B22F81100BCD8DE /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				32C2CF731B233B6200BCD8DE /* DBCategory.h */,
+				32C2CF741B233B6200BCD8DE /* DBCategory.m */,
+				32C2CF701B233B6100BCD8DE /* DBItem.h */,
+				32C2CF711B233B6100BCD8DE /* DBItem.m */,
+			);
+			name = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,9 +264,11 @@
 			files = (
 				32BD032C1B1F148F00C9A325 /* AppDelegate.m in Sources */,
 				32BD03291B1F148F00C9A325 /* main.m in Sources */,
+				32C2CF651B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld in Sources */,
+				32C2CF751B233B6200BCD8DE /* DBCategory.m in Sources */,
 				32BD03521B1F1E5800C9A325 /* DBPurchaseTableViewController.m in Sources */,
 				32BD034E1B1F1D8700C9A325 /* DBItemManager.m in Sources */,
-				32BD03561B1F1EFE00C9A325 /* DBItem.m in Sources */,
+				32C2CF721B233B6100BCD8DE /* DBItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +475,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		32C2CF631B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				32C2CF641B22EEA900BCD8DE /* NewSupermarket.xcdatamodel */,
+			);
+			currentVersion = 32C2CF641B22EEA900BCD8DE /* NewSupermarket.xcdatamodel */;
+			path = NewSupermarket.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 32BD031B1B1F148F00C9A325 /* Project object */;
 }
