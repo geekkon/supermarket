@@ -9,6 +9,7 @@
 #import "DBPurchaseTableViewController.h"
 #import "DBItem.h"
 #import "DBItemManager.h"
+#import "DBTableViewCell.h"
 
 @interface DBPurchaseTableViewController () <NSFetchedResultsControllerDelegate>
 
@@ -21,10 +22,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(itemManagerDidChangeDataNotitcation:)
-                                                 name:DBItemManagerDidChangeDataNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(itemManagerDidChangeDataNotitcation:)
+//                                                 name:DBItemManagerDidChangeDataNotification
+//                                               object:nil];
+    
+
+    [self.tableView registerNib:[UINib nibWithNibName:@"DBTableViewCell" bundle:[NSBundle mainBundle]]
+         forCellReuseIdentifier:@"Cell"];
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -33,16 +39,17 @@
 //     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)dealloc {
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+//- (void)dealloc {
+//    
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Getters
 
 - (NSFetchedResultsController *)fetchedResultsController {
     
@@ -55,8 +62,12 @@
     fetchRequest.entity =[NSEntityDescription entityForName:@"DBItem"
                                      inManagedObjectContext:[DBItemManager sharedManager].managedObjectContext];
     fetchRequest.fetchBatchSize = 20;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name"
-                                                                   ascending:YES]];
+    
+    NSSortDescriptor *categoryDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.name" ascending:YES];
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+    
+    fetchRequest.sortDescriptors = @[categoryDescriptor, nameDescriptor];
+
 
     
     self.fetchedResultsController =  [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
@@ -79,53 +90,44 @@
 
 #pragma mark - <UITableViewDelegate>
 
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    DBItem *item = [[DBItemManager sharedManager] itemAtIndex:indexPath.row];
     DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     [[DBItemManager sharedManager] addCount:10 toItem:item];
 }
 
 #pragma mark - <UITableViewDataSource>
-
-/*
+ 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 1;
+    return [self.fetchedResultsController.sections count];
+}
+
+- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
+    
+    return [sectionInfo name];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return [[DBItemManager sharedManager] itemsCount];
-}
-*/
- 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [[self.fetchedResultsController sections] count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
     return [sectionInfo numberOfObjects];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (DBTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    DBTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-//    DBItem *item = [[DBItemManager sharedManager] itemAtIndex:indexPath.row];
-//    
-//    cell.textLabel.text = item.name;
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", item.count];
- 
-    [self configureCell:cell atIndexPath:indexPath];
+    DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.nameLabel.text = item.name;
+    cell.infoLabel.text = item.info;
+    cell.countLabel.text = [NSString stringWithFormat:@"Count: %@", item.count];
+    
+//    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
@@ -138,7 +140,7 @@
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", item.count];
 }
 
-#pragma mark - Fetched results controller
+#pragma mark - <NSFetchedResultsControllerDelegate>
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     
@@ -178,7 +180,9 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+
             break;
             
         case NSFetchedResultsChangeMove:
@@ -240,7 +244,7 @@
 }
 */
 
-
+/*
 #pragma mark - Notification
 
 - (void)itemManagerDidChangeDataNotitcation:(NSNotification *)notification {
@@ -257,6 +261,9 @@
                               withRowAnimation:UITableViewRowAnimationLeft];
     }
 }
+*/
+ 
+#pragma mark - Actions
 
 - (IBAction)generateData:(UIBarButtonItem *)sender {
     

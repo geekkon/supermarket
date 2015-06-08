@@ -40,7 +40,7 @@ NSString * const DBItemManagerDidChangeDataNotification = @"DBItemManagerDidChan
 
 - (void)generateData {
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
         
         DBCategory *category = [NSEntityDescription insertNewObjectForEntityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
         
@@ -83,6 +83,19 @@ NSString * const DBItemManagerDidChangeDataNotification = @"DBItemManagerDidChan
 static const NSUInteger DELAY_IN_SECONDS = 3;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item {
+   
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if (item) {
+            
+            item.count = @([item.count integerValue] + count);
+            
+            [self save];
+        }
+    });
+    
+
+    /*
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
@@ -97,18 +110,16 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
                     [self save];
 
                  
-                    /*
                     [[NSNotificationCenter defaultCenter] postNotificationName:DBItemManagerDidChangeDataNotification
                                                                         object:item
-                   
-                     userInfo:nil];
-                     
-                     */
+                                                                      userInfo:nil];
+     
                 });
                 
             }
         });
     });
+*/
 }
 
 - (NSUInteger)indexOfItem:(DBItem *)item {

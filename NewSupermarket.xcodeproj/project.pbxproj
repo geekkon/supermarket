@@ -18,6 +18,8 @@
 		32C2CF651B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF631B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld */; };
 		32C2CF721B233B6100BCD8DE /* DBItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF711B233B6100BCD8DE /* DBItem.m */; };
 		32C2CF751B233B6200BCD8DE /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF741B233B6200BCD8DE /* DBCategory.m */; };
+		32C2CF791B25B2CA00BCD8DE /* DBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF771B25B2CA00BCD8DE /* DBTableViewCell.m */; };
+		32C2CF7A1B25B2CA00BCD8DE /* DBTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32C2CF781B25B2CA00BCD8DE /* DBTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,9 @@
 		32C2CF711B233B6100BCD8DE /* DBItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBItem.m; path = Model/DBItem.m; sourceTree = "<group>"; };
 		32C2CF731B233B6200BCD8DE /* DBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBCategory.h; path = Model/DBCategory.h; sourceTree = "<group>"; };
 		32C2CF741B233B6200BCD8DE /* DBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBCategory.m; path = Model/DBCategory.m; sourceTree = "<group>"; };
+		32C2CF761B25B2CA00BCD8DE /* DBTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTableViewCell.h; sourceTree = "<group>"; };
+		32C2CF771B25B2CA00BCD8DE /* DBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTableViewCell.m; sourceTree = "<group>"; };
+		32C2CF781B25B2CA00BCD8DE /* DBTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DBTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +100,7 @@
 				32BD03301B1F148F00C9A325 /* Main.storyboard */,
 				32BD034F1B1F1D8C00C9A325 /* Model */,
 				32BD03531B1F1E6700C9A325 /* Controller */,
+				32C2CF7B1B25B2F000BCD8DE /* Cell */,
 				32BD03331B1F148F00C9A325 /* Images.xcassets */,
 				32BD03351B1F148F00C9A325 /* LaunchScreen.xib */,
 				32BD03261B1F148F00C9A325 /* Supporting Files */,
@@ -159,6 +165,16 @@
 				32C2CF711B233B6100BCD8DE /* DBItem.m */,
 			);
 			name = Entities;
+			sourceTree = "<group>";
+		};
+		32C2CF7B1B25B2F000BCD8DE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				32C2CF761B25B2CA00BCD8DE /* DBTableViewCell.h */,
+				32C2CF771B25B2CA00BCD8DE /* DBTableViewCell.m */,
+				32C2CF781B25B2CA00BCD8DE /* DBTableViewCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BD03321B1F148F00C9A325 /* Main.storyboard in Resources */,
+				32C2CF7A1B25B2CA00BCD8DE /* DBTableViewCell.xib in Resources */,
 				32BD03371B1F148F00C9A325 /* LaunchScreen.xib in Resources */,
 				32BD03341B1F148F00C9A325 /* Images.xcassets in Resources */,
 			);
@@ -267,6 +284,7 @@
 				32C2CF651B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld in Sources */,
 				32C2CF751B233B6200BCD8DE /* DBCategory.m in Sources */,
 				32BD03521B1F1E5800C9A325 /* DBPurchaseTableViewController.m in Sources */,
+				32C2CF791B25B2CA00BCD8DE /* DBTableViewCell.m in Sources */,
 				32BD034E1B1F1D8700C9A325 /* DBItemManager.m in Sources */,
 				32C2CF721B233B6100BCD8DE /* DBItem.m in Sources */,
 			);
