@@ -61,7 +61,7 @@
     
     fetchRequest.entity =[NSEntityDescription entityForName:@"DBItem"
                                      inManagedObjectContext:[DBItemManager sharedManager].managedObjectContext];
-    fetchRequest.fetchBatchSize = 20;
+    fetchRequest.fetchBatchSize = 10;
     
     NSSortDescriptor *categoryDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.name" ascending:YES];
     NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
@@ -92,6 +92,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [self performSegueWithIdentifier:@"showInfo" sender:nil];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -121,23 +123,18 @@
     
     DBTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
+- (void)configureCell:(DBTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
     DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.nameLabel.text = item.name;
     cell.infoLabel.text = item.info;
     cell.countLabel.text = [NSString stringWithFormat:@"Count: %@", item.count];
-    
-//    [self configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    
-    DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    cell.textLabel.text = item.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", item.count];
 }
 
 #pragma mark - <NSFetchedResultsControllerDelegate>
@@ -157,6 +154,10 @@
             
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         default:
@@ -262,12 +263,6 @@
     }
 }
 */
- 
-#pragma mark - Actions
 
-- (IBAction)generateData:(UIBarButtonItem *)sender {
-    
-    [[DBItemManager sharedManager] generateData];
-}
 
 @end

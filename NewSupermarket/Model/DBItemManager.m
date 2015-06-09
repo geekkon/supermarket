@@ -122,6 +122,30 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 */
 }
 
+#pragma mark - Category Methods
+
+- (void)createCategoryWithName:(NSString *)name {
+    
+    DBCategory *category = [NSEntityDescription insertNewObjectForEntityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
+    
+    category.name = name;
+    
+    [self save];
+}
+
+- (void)renameCategory:(DBCategory *)category withName:(NSString *)name {
+
+    category.name = name;
+    
+    [self save];
+}
+
+- (void)deleteCategory:(DBCategory *)category {
+    
+    [self.managedObjectContext deleteObject:category];
+    [self save];
+}
+
 - (NSUInteger)indexOfItem:(DBItem *)item {
     
     return [self.items indexOfObject:item];

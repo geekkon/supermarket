@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @import CoreData;
 
-@class DBItem;
+@class DBItem, DBCategory;
 
 extern NSString * const DBItemManagerDidChangeDataNotification;
 
@@ -29,6 +29,10 @@ extern NSString * const DBItemManagerDidChangeDataNotification;
 - (NSUInteger)indexOfItem:(DBItem *)item;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item;
+
+- (void)createCategoryWithName:(NSString *)name;
+- (void)renameCategory:(DBCategory *)category withName:(NSString *)name;
+- (void)deleteCategory:(DBCategory *)category;
 
 - (void)save;
 

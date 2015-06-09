@@ -20,6 +20,7 @@
 		32C2CF751B233B6200BCD8DE /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF741B233B6200BCD8DE /* DBCategory.m */; };
 		32C2CF791B25B2CA00BCD8DE /* DBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF771B25B2CA00BCD8DE /* DBTableViewCell.m */; };
 		32C2CF7A1B25B2CA00BCD8DE /* DBTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32C2CF781B25B2CA00BCD8DE /* DBTableViewCell.xib */; };
+		32C2CF7E1B25CBD300BCD8DE /* DBCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C2CF7D1B25CBD300BCD8DE /* DBCategoryTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		32C2CF761B25B2CA00BCD8DE /* DBTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTableViewCell.h; sourceTree = "<group>"; };
 		32C2CF771B25B2CA00BCD8DE /* DBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTableViewCell.m; sourceTree = "<group>"; };
 		32C2CF781B25B2CA00BCD8DE /* DBTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DBTableViewCell.xib; sourceTree = "<group>"; };
+		32C2CF7C1B25CBD300BCD8DE /* DBCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCategoryTableViewController.h; sourceTree = "<group>"; };
+		32C2CF7D1B25CBD300BCD8DE /* DBCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCategoryTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +155,8 @@
 			children = (
 				32BD03501B1F1E5800C9A325 /* DBPurchaseTableViewController.h */,
 				32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */,
+				32C2CF7C1B25CBD300BCD8DE /* DBCategoryTableViewController.h */,
+				32C2CF7D1B25CBD300BCD8DE /* DBCategoryTableViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				32BD03291B1F148F00C9A325 /* main.m in Sources */,
 				32C2CF651B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld in Sources */,
 				32C2CF751B233B6200BCD8DE /* DBCategory.m in Sources */,
+				32C2CF7E1B25CBD300BCD8DE /* DBCategoryTableViewController.m in Sources */,
 				32BD03521B1F1E5800C9A325 /* DBPurchaseTableViewController.m in Sources */,
 				32C2CF791B25B2CA00BCD8DE /* DBTableViewCell.m in Sources */,
 				32BD034E1B1F1D8700C9A325 /* DBItemManager.m in Sources */,
