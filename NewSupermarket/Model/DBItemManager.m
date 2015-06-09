@@ -10,11 +10,8 @@
 #import "DBCategory.h"
 #import "DBItem.h"
 
-NSString * const DBItemManagerDidChangeDataNotification = @"DBItemManagerDidChangeDataNotification";
-
 @interface DBItemManager ()
 
-@property (strong, nonatomic) NSMutableArray *items;
 @property (nonatomic) dispatch_queue_t queue;
 
 @property (strong, nonatomic, readwrite) NSManagedObjectContext *managedObjectContext;
@@ -70,20 +67,16 @@ NSString * const DBItemManagerDidChangeDataNotification = @"DBItemManagerDidChan
     return item;
 }
 
-- (NSUInteger)itemsCount {
+- (void)removeItem:(DBItem *)item {
     
-    return [self.items count];
-}
-
-- (DBItem *)itemAtIndex:(NSUInteger)index {
-    
-    return self.items[index];
+    [self.managedObjectContext deleteObject:item];
+    [self save];
 }
 
 static const NSUInteger DELAY_IN_SECONDS = 3;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item {
-   
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         if (item) {
@@ -92,6 +85,7 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
             
             [self save];
         }
+        
     });
     
 
@@ -109,11 +103,6 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
                  
                     [self save];
 
-                 
-                    [[NSNotificationCenter defaultCenter] postNotificationName:DBItemManagerDidChangeDataNotification
-                                                                        object:item
-                                                                      userInfo:nil];
-     
                 });
                 
             }
@@ -124,13 +113,15 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 
 #pragma mark - Category Methods
 
-- (void)createCategoryWithName:(NSString *)name {
+- (DBCategory *)createCategoryWithName:(NSString *)name {
     
     DBCategory *category = [NSEntityDescription insertNewObjectForEntityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
     
     category.name = name;
     
     [self save];
+    
+    return category;
 }
 
 - (void)renameCategory:(DBCategory *)category withName:(NSString *)name {
@@ -144,11 +135,6 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
     
     [self.managedObjectContext deleteObject:category];
     [self save];
-}
-
-- (NSUInteger)indexOfItem:(DBItem *)item {
-    
-    return [self.items indexOfObject:item];
 }
 
 #pragma mark - Core Data stack

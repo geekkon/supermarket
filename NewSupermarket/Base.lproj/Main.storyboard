@@ -17,7 +17,13 @@
                             <outlet property="delegate" destination="0Vr-cC-I2m" id="2RJ-ji-Z3q"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Purchase" id="9eq-ud-htV"/>
+                    <navigationItem key="navigationItem" title="Purchase" id="9eq-ud-htV">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CXj-Gw-MQd">
+                            <connections>
+                                <segue destination="Hfi-3z-zA1" kind="push" identifier="addItem" id="kAd-Rb-wRB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="Hfi-3z-zA1" kind="push" identifier="showInfo" id="xra-P0-yvj"/>
                     </connections>
@@ -26,10 +32,10 @@
             </objects>
             <point key="canvasLocation" x="1013" y="326"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Item Table View Controller-->
         <scene sceneID="ycP-Xg-rmL">
             <objects>
-                <tableViewController id="Hfi-3z-zA1" sceneMemberID="viewController">
+                <tableViewController id="Hfi-3z-zA1" customClass="DBItemTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="i02-Da-hA2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -163,8 +169,8 @@
         <!--Sell-->
         <scene sceneID="s2P-dz-Uat">
             <objects>
-                <tableViewController id="sIy-sI-KDP" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IH9-b2-oDk">
+                <tableViewController id="sIy-sI-KDP" customClass="DBSellTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="126" sectionHeaderHeight="22" sectionFooterHeight="22" id="IH9-b2-oDk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -221,4 +227,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="kAd-Rb-wRB"/>
+    </inferredMetricsTieBreakers>
 </document>

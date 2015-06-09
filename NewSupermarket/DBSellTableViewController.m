@@ -1,30 +1,32 @@
 //
-//  DBPurchaseTableViewController.m
+//  DBSellTableViewController.m
 //  NewSupermarket
 //
-//  Created by Dim on 03.06.15.
+//  Created by Dim on 09.06.15.
 //  Copyright (c) 2015 Dmitriy Baklanov. All rights reserved.
 //
 
-#import "DBPurchaseTableViewController.h"
-#import "DBItemTableViewController.h"
+#import "DBSellTableViewController.h"
 #import "DBItem.h"
 #import "DBItemManager.h"
 #import "DBTableViewCell.h"
 
-@interface DBPurchaseTableViewController () <NSFetchedResultsControllerDelegate>
+
+@interface DBSellTableViewController () <NSFetchedResultsControllerDelegate>
+
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 
-@implementation DBPurchaseTableViewController
+@implementation DBSellTableViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-
+    
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"DBTableViewCell" bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"Cell"];
     
@@ -33,7 +35,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,7 +96,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    [self performSegueWithIdentifier:@"showInfo" sender:nil];
+    //    [self performSegueWithIdentifier:@"showInfo" sender:nil];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -104,7 +106,7 @@
 }
 
 #pragma mark - <UITableViewDataSource>
- 
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.fetchedResultsController.sections count];
 }
@@ -129,20 +131,6 @@
     
     return cell;
 }
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [[DBItemManager sharedManager] removeItem:item];
-    }
-}
-
-#pragma mark - Private Methods
 
 - (void)configureCell:(DBTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
@@ -197,9 +185,9 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            //            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-
+            
             break;
             
         case NSFetchedResultsChangeMove:
@@ -214,19 +202,42 @@
     [self.tableView endUpdates];
 }
 
-#pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([[segue identifier] isEqualToString:@"addItem"]) {
-        
-        [[segue destinationViewController] setNewItem:YES];
-//        
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-//        [[segue destinationViewController] setDetailItem:object];
-    }
-}
+
+
+/*
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
+
+/*
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
+
+/*
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
+
+/*
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 
 

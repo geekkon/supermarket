@@ -11,8 +11,6 @@
 
 @class DBItem, DBCategory;
 
-extern NSString * const DBItemManagerDidChangeDataNotification;
-
 @interface DBItemManager : NSObject
 
 @property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
@@ -23,14 +21,11 @@ extern NSString * const DBItemManagerDidChangeDataNotification;
 
 
 - (DBItem *)createItem;
-
-- (NSUInteger)itemsCount;
-- (DBItem *)itemAtIndex:(NSUInteger)index;
-- (NSUInteger)indexOfItem:(DBItem *)item;
+- (void)removeItem:(DBItem *)item;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item;
 
-- (void)createCategoryWithName:(NSString *)name;
+- (DBCategory *)createCategoryWithName:(NSString *)name;
 - (void)renameCategory:(DBCategory *)category withName:(NSString *)name;
 - (void)deleteCategory:(DBCategory *)category;
 
