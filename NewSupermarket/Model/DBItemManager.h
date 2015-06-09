@@ -25,7 +25,7 @@
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item;
 
-- (DBCategory *)createCategoryWithName:(NSString *)name;
+- (void)createCategoryWithName:(NSString *)name;
 - (void)renameCategory:(DBCategory *)category withName:(NSString *)name;
 - (void)deleteCategory:(DBCategory *)category;
 

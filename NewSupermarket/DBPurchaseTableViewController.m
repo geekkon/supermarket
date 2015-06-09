@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+//    [[DBItemManager sharedManager] generateData];
 
     [self.tableView registerNib:[UINib nibWithNibName:@"DBTableViewCell" bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"Cell"];
@@ -94,7 +95,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    [self performSegueWithIdentifier:@"showInfo" sender:nil];
+    [self performSegueWithIdentifier:@"showInfo" sender:nil];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

@@ -7,21 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-
-@class DBItem;
+@import CoreData;
 
 @interface DBCategory : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *items;
-@end
-
-@interface DBCategory (CoreDataGeneratedAccessors)
-
-- (void)addItemsObject:(DBItem *)value;
-- (void)removeItemsObject:(DBItem *)value;
-- (void)addItems:(NSSet *)values;
-- (void)removeItems:(NSSet *)values;
 
 @end

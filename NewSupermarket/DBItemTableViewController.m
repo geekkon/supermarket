@@ -7,11 +7,14 @@
 //
 
 #import "DBItemTableViewController.h"
+#import "DBCategoryTableViewController.h"
 #import "DBItem.h"
 #import "DBCategory.h"
 #import "DBItemManager.h"
 
 @interface DBItemTableViewController ()
+
+@property (strong, nonatomic) DBCategory *category;
 
 @end
 
@@ -34,6 +37,18 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+    NSLog(@"%@", self.category.name);
+}
+
+- (void)dealloc
+{
+    NSLog(@"                               ITEM VIEW CONTROLLER IS DEALOCATED");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,28 +91,51 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
+    if ([[segue identifier] isEqualToString:@"addItem"]) {
+        
+        
+
+        
+        //
+        //        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        //        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        //        [[segue destinationViewController] setDetailItem:object];
+        
+    } else if ([[segue identifier] isEqualToString:@"chooseCategory"]) {
+        
+        if ([sender isKindOfClass:[UITableViewCell class]]) {
+            
+            __block UITableViewCell *cell = sender;
+            
+            [[segue destinationViewController] setBlock:^(DBCategory *category) {
+                self.category = category;
+                cell.textLabel.text = category.name;
+            }];
+        }
+
+    }
+
+    
 }
-*/
+
 
 #pragma mark - Actions
 
 - (void)doneAction:(UIBarButtonItem *)sender {
     
-    DBItem *item = [[DBItemManager sharedManager] createItem];
-    item.name = @"Random name";
-    item.info = @"just an info";
-    item.count = @(arc4random_uniform(100));
-    
-    DBCategory *category = [[DBItemManager sharedManager] createCategoryWithName:@"New category"];
-    
-    item.category = category;
+//    DBItem *item = [[DBItemManager sharedManager] createItem];
+//    item.name = @"Random name";
+//    item.info = @"just an info";
+//    item.count = @(arc4random_uniform(100));
+//    
+//    DBCategory *category = [[DBItemManager sharedManager] createCategoryWithName:@"New category"];
+//    
+//    item.category = category;
     
     [self.navigationController popViewControllerAnimated:YES];
 }

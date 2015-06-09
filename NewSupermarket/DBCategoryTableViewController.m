@@ -9,34 +9,20 @@
 #import "DBCategoryTableViewController.h"
 #import "DBItemManager.h"
 #import "DBCategory.h"
-@import CoreData;
 
-NS_ENUM(NSUInteger, AlerViewButtonType) {
-    AlerViewButtonTypeCancel = 0,
-    AlerViewButtonTypeDone   = 1
+NS_ENUM(NSUInteger, UIAlertViewButtonType) {
+    UIAlertViewButtonTypeCancel,
+    UIAlertViewButtonTypeDone
 };
 
 @interface DBCategoryTableViewController () <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSIndexPath *currentIndexPath;
 
 @end
 
 @implementation DBCategoryTableViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Getters
 
@@ -69,46 +55,18 @@ NS_ENUM(NSUInteger, AlerViewButtonType) {
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:self.managedObjectContext
                                           sectionNameKeyPath:nil
-                                                   cacheName:nil];
+                                                   cacheName:@"Categories"];
     
     _fetchedResultsController.delegate = self;
     
     NSError *error = nil;
     if (![_fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
     return _fetchedResultsController;
-}
-
-#pragma mark - <UIAlertViewDelegate>
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    
-    if (textField.text.length) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    if (buttonIndex == AlerViewButtonTypeDone) {
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        
-        DBCategory *category = [self.fetchedResultsController objectAtIndexPath:self.currentIndexPath];
-        
-        category.name = textField.text;
-        
-//        [[DBItemManager sharedManager] renameCategory:category withName:textField.text];
-        
-    }
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -117,30 +75,13 @@ NS_ENUM(NSUInteger, AlerViewButtonType) {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    
     DBCategory *category = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    self.currentIndexPath = indexPath;
-
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Rename the category"
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Done", nil];
+    if (self.block) {
+        self.block(category);
+    }
     
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    
-    textField.text = category.name;
-    textField.placeholder = @"Enter category";
-    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
-    [alertView show];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -159,6 +100,19 @@ NS_ENUM(NSUInteger, AlerViewButtonType) {
     cell.textLabel.text = category.name;
     
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        DBCategory *category = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [[DBItemManager sharedManager] deleteCategory:category];
+    }
 }
 
 #pragma mark - <NSFetchedResultsControllerDelegate>
@@ -184,54 +138,58 @@ NS_ENUM(NSUInteger, AlerViewButtonType) {
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
-        case NSFetchedResultsChangeUpdate:
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            
-            break;
-            
       default:
             break;
     }
 }
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    
     [self.tableView endUpdates];
 }
 
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
+#pragma mark - <UIAlertViewDelegate>
 
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        DBCategory *category = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [[DBItemManager sharedManager] deleteCategory:category];
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+ 
+    if (buttonIndex == UIAlertViewButtonTypeDone) {
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        [[DBItemManager sharedManager] createCategoryWithName:textField.text];
     }
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    
+    if (textField.text.length) {
+        return YES;
+    }
+    
+    return NO;
 }
-*/
 
 #pragma mark - Actions
 
 - (IBAction)addAction:(UIBarButtonItem *)sender {
     
-    [[DBItemManager sharedManager] createCategoryWithName:@"Категоря"];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Enter category name"
+                                                        message:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Done", nil];
     
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    
+    textField.placeholder = @"Category";
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    textField.autocorrectionType = UITextAutocorrectionTypeYes;
+    textField.returnKeyType = UIReturnKeyDone;
+    
+    [alertView show];
 }
 
 @end

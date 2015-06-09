@@ -71,7 +71,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="oq2-bM-m6Y" kind="push" id="251-qL-Xno"/>
+                                            <segue destination="oq2-bM-m6Y" kind="push" identifier="chooseCategory" id="251-qL-Xno"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -125,7 +125,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="CategoryCell" id="SFy-UZ-Za2">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="SFy-UZ-Za2">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SFy-UZ-Za2" id="hRH-ZQ-w9d">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -228,6 +228,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="kAd-Rb-wRB"/>
+        <segue reference="xra-P0-yvj"/>
     </inferredMetricsTieBreakers>
 </document>

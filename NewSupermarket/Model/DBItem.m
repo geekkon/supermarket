@@ -7,8 +7,6 @@
 //
 
 #import "DBItem.h"
-#import "DBCategory.h"
-
 
 @implementation DBItem
 

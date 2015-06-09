@@ -113,15 +113,13 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 
 #pragma mark - Category Methods
 
-- (DBCategory *)createCategoryWithName:(NSString *)name {
+- (void)createCategoryWithName:(NSString *)name {
     
     DBCategory *category = [NSEntityDescription insertNewObjectForEntityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
     
     category.name = name;
     
     [self save];
-    
-    return category;
 }
 
 - (void)renameCategory:(DBCategory *)category withName:(NSString *)name {

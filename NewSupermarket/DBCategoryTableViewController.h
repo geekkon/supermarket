@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class DBCategory;
+
+typedef void (^SelectionBlock)(DBCategory *);
+
 @interface DBCategoryTableViewController : UITableViewController
+
+@property (copy, nonatomic) SelectionBlock block;
 
 @end
