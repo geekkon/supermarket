@@ -111,6 +111,26 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 */
 }
 
+- (void)addCount:(NSInteger)count toItem:(DBItem *)item withBlock:(ComplitionBlock)block {
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if (item) {
+            
+            item.count = @([item.count integerValue] + count);
+            
+            [self save];
+            
+            if (block) {
+                block();
+            }
+        }
+        
+    });
+    
+}
+
 #pragma mark - Category Methods
 
 - (void)createCategoryWithName:(NSString *)name {

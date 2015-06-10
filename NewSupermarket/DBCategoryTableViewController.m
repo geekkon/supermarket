@@ -61,7 +61,6 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
     
     NSError *error = nil;
     if (![_fetchedResultsController performFetch:&error]) {
-
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }

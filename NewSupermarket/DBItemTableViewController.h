@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class DBItem;
+
 @interface DBItemTableViewController : UITableViewController
 
-@property (nonatomic, getter = isNewItem) BOOL newItem;
+@property (strong, nonatomic) DBItem *item;
 
 @end

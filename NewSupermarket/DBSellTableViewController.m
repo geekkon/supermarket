@@ -7,6 +7,7 @@
 //
 
 #import "DBSellTableViewController.h"
+#import "DBItemTableViewController.h"
 #import "DBItem.h"
 #import "DBItemManager.h"
 #import "DBTableViewCell.h"
@@ -96,13 +97,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //    [self performSegueWithIdentifier:@"showInfo" sender:nil];
+//    [self performSegueWithIdentifier:@"showItemFromSell" sender:indexPath];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    [[DBItemManager sharedManager] addCount:10 toItem:item];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -239,6 +236,16 @@
  }
  */
 
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"showItemFromSell"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        DBItem *item = [self.fetchedResultsController objectAtIndexPath:sender];
+        [[segue destinationViewController] setItem:item];
+    }
+}
 
 
 @end

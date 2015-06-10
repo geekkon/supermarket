@@ -82,8 +82,6 @@
     
     NSError *error = nil;
     if (![_fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -95,13 +93,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self performSegueWithIdentifier:@"showInfo" sender:nil];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    [[DBItemManager sharedManager] addCount:10 toItem:item];
+    [self performSegueWithIdentifier:@"showItem" sender:indexPath];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -219,13 +213,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([[segue identifier] isEqualToString:@"addItem"]) {
-        
-        [[segue destinationViewController] setNewItem:YES];
-//        
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-//        [[segue destinationViewController] setDetailItem:object];
+    if ([[segue identifier] isEqualToString:@"showItem"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        DBItem *item = [self.fetchedResultsController objectAtIndexPath:sender];
+        [[segue destinationViewController] setItem:item];
     }
 }
 

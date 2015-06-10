@@ -14,7 +14,12 @@
 
 @interface DBItemTableViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextView *infoTextView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *orderSegmentedControl;
+
 @property (strong, nonatomic) DBCategory *category;
+@property (nonatomic) BOOL canTakeOrder;
 
 @end
 
@@ -23,32 +28,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.isNewItem) {
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveAction:)];
+    
+    self.navigationItem.rightBarButtonItem = saveButton;
+    
+    if (!self.item) {
+        self.navigationItem.title = @"Create item";
+    } else {
+        self.canTakeOrder = YES;
+        self.navigationItem.title = @"Edit item";
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+        [self.item addObserver:self forKeyPath:@"count"
+                       options:NSKeyValueObservingOptionNew
+                       context:nil];
         
-        self.navigationItem.rightBarButtonItem = doneButton;
-        
-        self.navigationItem.title = @"New item";
+        self.nameTextField.text = self.item.name;
+        self.infoTextView.text = self.item.info;
+        self.category = self.item.category;
     }
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.orderSegmentedControl.enabled = self.canTakeOrder;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    
-    NSLog(@"%@", self.category.name);
-}
+- (void)dealloc {
+    [self.item removeObserver:self forKeyPath:@"count"];
 
-- (void)dealloc
-{
-    NSLog(@"                               ITEM VIEW CONTROLLER IS DEALOCATED");
+    NSLog(@"              ITEM VIEW CONTROLLER IS DEALOCATED");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,57 +62,43 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Observing
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    
+    NSLog(@"\nobserveValueForKeyPath: %@\nofObject: %@\nchange: %@", keyPath, object, change);
+    
+    //id value = [change objectForKey:NSKeyValueChangeNewKey];
+}
+
+#pragma mark - <UITextFieldDelegate>
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+#pragma mark - <UITableViewDataSource>
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    
+    if (section == 0) {
+        return [NSString stringWithFormat:@"Count: %@", self.item.count];
+    }
+    
+    return nil;
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([[segue identifier] isEqualToString:@"addItem"]) {
-        
-        
-
-        
-        //
-        //        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        //        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        //        [[segue destinationViewController] setDetailItem:object];
-        
-    } else if ([[segue identifier] isEqualToString:@"chooseCategory"]) {
+    if ([[segue identifier] isEqualToString:@"chooseCategory"]) {
         
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             
@@ -117,27 +109,78 @@
                 cell.textLabel.text = category.name;
             }];
         }
-
     }
+}
 
+#pragma mark - Private Methods 
+
+- (void)showViewWithTitle:(NSString *)title {
+    
+    CGFloat side = 100.0;
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.bounds) - side / 2.0, -100.0, side, side)];
+    
+    view.backgroundColor = [UIColor lightGrayColor];
+    view.layer.cornerRadius = 5.0;
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:view.bounds];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = title;
+    
+    [view addSubview:label];
+    
+    [self.view addSubview:view];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        CGRect frame = view.frame;
+        frame.origin.y = CGRectGetMidY(self.view.bounds) - side / 2.0;
+        view.frame = frame;
+        
+    } completion:^(BOOL finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.3 animations:^{
+                view.alpha = 0.0;
+            }];
+//            [view removeFromSuperview];
+
+        });
+    }];
     
 }
 
-
 #pragma mark - Actions
 
-- (void)doneAction:(UIBarButtonItem *)sender {
+- (void)saveAction:(UIBarButtonItem *)sender {
     
-//    DBItem *item = [[DBItemManager sharedManager] createItem];
-//    item.name = @"Random name";
-//    item.info = @"just an info";
-//    item.count = @(arc4random_uniform(100));
-//    
-//    DBCategory *category = [[DBItemManager sharedManager] createCategoryWithName:@"New category"];
-//    
-//    item.category = category;
+    if (!self.item) {
+        self.item = [[DBItemManager sharedManager] createItem];
+        [self.item addObserver:self forKeyPath:@"count"
+                       options:NSKeyValueObservingOptionNew
+                       context:nil];
+    }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    self.item.name = self.nameTextField.text;
+    self.item.info = self.infoTextView.text;
+    self.item.category = self.category;
+    
+    [self showViewWithTitle:@"Saved"];
+    
+    self.canTakeOrder = YES;
+    self.orderSegmentedControl.enabled = YES;
+    
+//    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)orderAction:(UISegmentedControl *)sender {
+   
+    NSUInteger count = pow(10,sender.selectedSegmentIndex);
+    
+    UITableView *tableView = self.tableView;
+    
+    [[DBItemManager sharedManager] addCount:count toItem:self.item withBlock:^{
+        [tableView reloadData];
+    }];
 }
 
 @end

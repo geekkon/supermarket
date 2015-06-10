@@ -11,6 +11,8 @@
 
 @class DBItem, DBCategory;
 
+typedef void (^ComplitionBlock) (void);
+
 @interface DBItemManager : NSObject
 
 @property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
@@ -24,6 +26,7 @@
 - (void)removeItem:(DBItem *)item;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item;
+- (void)addCount:(NSInteger)count toItem:(DBItem *)item withBlock:(ComplitionBlock)block;
 
 - (void)createCategoryWithName:(NSString *)name;
 - (void)renameCategory:(DBCategory *)category withName:(NSString *)name;

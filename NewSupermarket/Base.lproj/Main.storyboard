@@ -20,12 +20,12 @@
                     <navigationItem key="navigationItem" title="Purchase" id="9eq-ud-htV">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="CXj-Gw-MQd">
                             <connections>
-                                <segue destination="Hfi-3z-zA1" kind="push" identifier="addItem" id="kAd-Rb-wRB"/>
+                                <segue destination="Hfi-3z-zA1" kind="push" identifier="" id="kAd-Rb-wRB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="Hfi-3z-zA1" kind="push" identifier="showInfo" id="xra-P0-yvj"/>
+                        <segue destination="Hfi-3z-zA1" kind="push" identifier="showItem" id="xra-P0-yvj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hb9-uo-F2o" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -41,7 +41,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Заказать" id="1AT-28-wEB">
+                            <tableViewSection headerTitle="Order" footerTitle="Count: 0" id="1AT-28-wEB">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="fdC-ET-5za">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -51,19 +51,21 @@
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UTp-zd-hBW">
                                                     <rect key="frame" x="8" y="7" width="304" height="29"/>
                                                     <segments>
-                                                        <segment title="+ 10"/>
-                                                        <segment title="+ 50"/>
-                                                        <segment title="+ 100"/>
-                                                        <segment title="+ 500"/>
-                                                        <segment title="+ 1000"/>
+                                                        <segment title="1"/>
+                                                        <segment title="10"/>
+                                                        <segment title="100"/>
+                                                        <segment title="1000"/>
                                                     </segments>
+                                                    <connections>
+                                                        <action selector="orderAction:" destination="Hfi-3z-zA1" eventType="valueChanged" id="TnE-Bf-EfH"/>
+                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Категория" id="EB1-kd-8x1">
+                            <tableViewSection headerTitle="Category" id="EB1-kd-8x1">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="Jzo-Bj-JvV">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -76,30 +78,40 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Наименование" id="53p-se-UAc">
+                            <tableViewSection headerTitle="Name" id="53p-se-UAc">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="BaH-lp-qc4">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BaH-lp-qc4" id="I8c-1L-AaO">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pcE-3W-sf1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter name" minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="t1S-7q-1T0">
+                                                    <rect key="frame" x="8" y="7" width="304" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="Hfi-3z-zA1" id="BrK-U1-aCp"/>
+                                                    </connections>
+                                                </textField>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Информация" id="LR1-Nk-foB">
+                            <tableViewSection headerTitle="Info" id="LR1-Nk-foB">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="103" id="jY1-Ib-7bq">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jY1-Ib-7bq" id="nl6-pM-7KL">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7U-aX-IRm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="102.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -111,10 +123,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="SCJ-1Y-jvn"/>
+                    <connections>
+                        <outlet property="infoTextView" destination="r7U-aX-IRm" id="un2-Nh-YoV"/>
+                        <outlet property="nameTextField" destination="t1S-7q-1T0" id="9Du-Ja-mcT"/>
+                        <outlet property="orderSegmentedControl" destination="UTp-zd-hBW" id="P1K-f6-JhI"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qFn-e6-zUu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1463" y="326"/>
+            <point key="canvasLocation" x="1503" y="326"/>
         </scene>
         <!--Categories-->
         <scene sceneID="qWF-ey-jPk">
@@ -147,7 +164,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mfq-1l-Lmi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1920" y="326"/>
+            <point key="canvasLocation" x="1926" y="326"/>
         </scene>
         <!--Purchase-->
         <scene sceneID="iPC-Lg-Wyx">
