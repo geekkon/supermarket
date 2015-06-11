@@ -1,19 +1,19 @@
 //
-//  DBSellTableViewController.m
+//  DBBuyTableViewController.m
 //  NewSupermarket
 //
 //  Created by Dim on 09.06.15.
 //  Copyright (c) 2015 Dmitriy Baklanov. All rights reserved.
 //
 
-#import "DBSellTableViewController.h"
+#import "DBBuyTableViewController.h"
 #import "DBItemTableViewController.h"
 #import "DBItem.h"
 #import "DBItemManager.h"
 #import "DBTableViewCell.h"
 
 
-@interface DBSellTableViewController () <NSFetchedResultsControllerDelegate>
+@interface DBBuyTableViewController () <NSFetchedResultsControllerDelegate>
 
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation DBSellTableViewController
+@implementation DBBuyTableViewController
 
 
 - (void)viewDidLoad {
@@ -97,7 +97,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    [self performSegueWithIdentifier:@"showItemFromSell" sender:indexPath];
+    [self performSegueWithIdentifier:@"showItem" sender:indexPath];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -240,7 +240,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([[segue identifier] isEqualToString:@"showItemFromSell"]) {
+    if ([[segue identifier] isEqualToString:@"showItem"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DBItem *item = [self.fetchedResultsController objectAtIndexPath:sender];
         [[segue destinationViewController] setItem:item];

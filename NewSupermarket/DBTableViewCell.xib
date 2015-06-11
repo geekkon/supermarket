@@ -33,7 +33,6 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="1" blue="0.94826788650000005" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="countLabel" destination="hlz-Hi-8ko" id="gFn-ht-tD3"/>
                 <outlet property="infoLabel" destination="LCF-iQ-4wH" id="ObH-wm-iIu"/>

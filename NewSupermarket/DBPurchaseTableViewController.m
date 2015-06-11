@@ -95,7 +95,7 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [self performSegueWithIdentifier:@"showItem" sender:indexPath];
+    [self performSegueWithIdentifier:@"editItem" sender:indexPath];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -213,7 +213,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([[segue identifier] isEqualToString:@"showItem"]) {
+    if ([[segue identifier] isEqualToString:@"editItem"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DBItem *item = [self.fetchedResultsController objectAtIndexPath:sender];
         [[segue destinationViewController] setItem:item];

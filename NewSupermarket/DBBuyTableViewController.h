@@ -1,5 +1,5 @@
 //
-//  DBSellTableViewController.h
+//  DBBuyTableViewController.h
 //  NewSupermarket
 //
 //  Created by Dim on 09.06.15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DBSellTableViewController : UITableViewController
+@interface DBBuyTableViewController : UITableViewController
 
 @end
