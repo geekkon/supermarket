@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @import CoreData;
 
 @class DBItem, DBCategory;
 
-typedef void (^ComplitionBlock) (void);
+typedef void (^VoidBlock)(void);
 
 @interface DBItemManager : NSObject
 
@@ -23,8 +24,7 @@ typedef void (^ComplitionBlock) (void);
 - (DBItem *)createItem;
 - (void)removeItem:(DBItem *)item;
 
-- (void)addCount:(NSInteger)count toItem:(DBItem *)item;
-- (void)addCount:(NSInteger)count toItem:(DBItem *)item withBlock:(ComplitionBlock)block;
+- (void)addCount:(NSInteger)count toItem:(DBItem *)item onFailure:(VoidBlock)block;
 
 // DBCategory Methods
 - (void)createCategoryWithName:(NSString *)name;

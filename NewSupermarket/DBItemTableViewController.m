@@ -341,8 +341,12 @@ NS_ENUM(NSUInteger, DBSaveAlertViewButtonType) {
     if (self.segueFromBuyController) {
         count *= -1;
     }
-
-    [[DBItemManager sharedManager] addCount:count toItem:self.item];
+    
+    __weak DBItemTableViewController *weakSelf = self;
+    
+    [[DBItemManager sharedManager] addCount:count toItem:self.item onFailure:^{
+        [weakSelf showSimpleViewOnTopWithTitle:@"ITEM WAS DELETED"];
+    }];
 }
 
 - (IBAction)tapAction:(UITapGestureRecognizer *)sender {

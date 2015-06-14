@@ -55,57 +55,42 @@
 
 static const NSUInteger DELAY_IN_SECONDS = 3;
 
-- (void)addCount:(NSInteger)count toItem:(DBItem *)item {
+- (void)addCount:(NSInteger)count toItem:(DBItem *)item onFailure:(VoidBlock)block {
+    
+    __weak DBItemManager *weakSelf = self;
+    __weak DBItem *weakItem = item;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        if (item) {
-            
-            item.count = @([item.count integerValue] + count);
-            
-            [self save];
-        }
-        
-    });
-    
+        if ([weakSelf.managedObjectContext.registeredObjects containsObject:weakItem]) {
 
-    /*
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        dispatch_async(self.queue, ^{
-            
-            if (item) {
+            dispatch_async(weakSelf.queue, ^{
                 
-                item.count = @([item.count integerValue] + count);
+                NSUInteger currentCount = [weakItem.count integerValue];
+                NSInteger delta = currentCount + count;
+                NSUInteger canOrderCount = count;
+                
+                if (delta < 0) {
+                    canOrderCount = count - delta;
+                }
+                
+                NSNumber *newCount = @(currentCount + canOrderCount);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                 
-                    [self save];
-
+                    
+                    weakItem.count = newCount;
+                    
+                    [weakSelf save];
+                    
                 });
-                
-            }
-        });
-    });
-*/
-}
-
-- (void)addCount:(NSInteger)count toItem:(DBItem *)item withBlock:(ComplitionBlock)block {
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        if (item) {
+            });
             
-            item.count = @([item.count integerValue] + count);
-            
-            [self save];
+        } else {
             
             if (block) {
                 block();
             }
         }
-        
     });
 }
 
