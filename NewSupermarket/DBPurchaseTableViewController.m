@@ -29,11 +29,6 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"DBTableViewCell" bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"Cell"];
     
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
      self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
@@ -93,9 +88,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    [self performSegueWithIdentifier:@"editItem" sender:indexPath];
+    [self performSegueWithIdentifier:@"editItem" sender:nil];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -215,11 +208,9 @@
     
     if ([[segue identifier] isEqualToString:@"editItem"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        DBItem *item = [self.fetchedResultsController objectAtIndexPath:sender];
+        DBItem *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[segue destinationViewController] setItem:item];
     }
 }
-
-
 
 @end

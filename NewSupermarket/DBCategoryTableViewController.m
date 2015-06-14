@@ -15,10 +15,14 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
     UIAlertViewButtonTypeDone
 };
 
-@interface DBCategoryTableViewController () <NSFetchedResultsControllerDelegate>
+static const NSUInteger MAX_LENGTH = 32; // max length of category name for plain UITableViewStyle
+
+@interface DBCategoryTableViewController () <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+@property (strong, nonatomic) DBCategory *editingCategory;
 
 @end
 
@@ -55,7 +59,7 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:self.managedObjectContext
                                           sectionNameKeyPath:nil
-                                                   cacheName:@"Categories"];
+                                                   cacheName:nil];
     
     _fetchedResultsController.delegate = self;
     
@@ -74,13 +78,25 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DBCategory *category = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    DBCategory *selectedCategory = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if (self.block) {
-        self.block(category);
+        self.block(selectedCategory);
     }
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    
+    DBCategory *category = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    [self renameCategory:category];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return @"Delete category and items";
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -109,6 +125,7 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
         DBCategory *category = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[DBItemManager sharedManager] deleteCategory:category];
     }
@@ -137,6 +154,10 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
+        case NSFetchedResultsChangeUpdate:
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
       default:
             break;
     }
@@ -153,7 +174,14 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
  
     if (buttonIndex == UIAlertViewButtonTypeDone) {
         UITextField *textField = [alertView textFieldAtIndex:0];
-        [[DBItemManager sharedManager] createCategoryWithName:textField.text];
+        if (self.editingCategory) {
+            [[DBItemManager sharedManager] renameCategory:self.editingCategory
+                                                 withName:textField.text];
+        } else {
+            [[DBItemManager sharedManager] createCategoryWithName:textField.text];
+        }
+    } else if (buttonIndex == UIAlertViewButtonTypeCancel) {
+        self.editingCategory = nil;
     }
 }
 
@@ -168,11 +196,22 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
     return NO;
 }
 
-#pragma mark - Actions
+#pragma mark - <UITextFieldDelegate>
 
-- (IBAction)addAction:(UIBarButtonItem *)sender {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Enter category name"
+    if ((textField.text.length + string.length) > MAX_LENGTH) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - Private Methods
+
+- (void)showAlertWithTitle:(NSString *)title andText:(NSString *)text {
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
                                                         message:nil
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
@@ -182,13 +221,30 @@ NS_ENUM(NSUInteger, UIAlertViewButtonType) {
     
     UITextField *textField = [alertView textFieldAtIndex:0];
     
-    textField.placeholder = @"Category";
+    textField.placeholder = @"Name";
+    textField.text = text;
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     textField.autocorrectionType = UITextAutocorrectionTypeYes;
     textField.returnKeyType = UIReturnKeyDone;
+    textField.delegate = self;
     
     [alertView show];
+}
+
+- (void)renameCategory:(DBCategory *)category {
+    
+    self.editingCategory = category;
+    
+    [self showAlertWithTitle:@"Rename category" andText:category.name];
+}
+
+
+#pragma mark - Actions
+
+- (IBAction)addAction:(UIBarButtonItem *)sender {
+    
+    [self showAlertWithTitle:@"Create new category" andText:nil];
 }
 
 @end

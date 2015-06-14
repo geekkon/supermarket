@@ -35,28 +35,7 @@
     return manager;
 }
 
-- (void)generateData {
-    
-    for (int i = 0; i < 5; i++) {
-        
-        DBCategory *category = [NSEntityDescription insertNewObjectForEntityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
-        
-        category.name = [NSString stringWithFormat:@"Category #%d", i + 1];
-        
-        for (int j = 0; j < 10; j++) {
-            
-            DBItem *item = [NSEntityDescription insertNewObjectForEntityForName:@"DBItem" inManagedObjectContext:self.managedObjectContext];
-            
-            item.name = [NSString stringWithFormat:@"Item number %d", j + 1];
-            item.info = [NSString stringWithFormat:@"Info for item number %d", j + 1];
-            item.count = @(arc4random_uniform(100));
-            item.category = category;
-        }
-        
-    }
-    
-    [self save];
-}
+#pragma mark - DBItem Methods
 
 - (DBItem *)createItem {
  
@@ -70,6 +49,7 @@
 - (void)removeItem:(DBItem *)item {
     
     [self.managedObjectContext deleteObject:item];
+    
     [self save];
 }
 
@@ -113,7 +93,6 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item withBlock:(ComplitionBlock)block {
     
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DELAY_IN_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         if (item) {
@@ -128,10 +107,9 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
         }
         
     });
-    
 }
 
-#pragma mark - Category Methods
+#pragma mark - DBCategory Methods
 
 - (void)createCategoryWithName:(NSString *)name {
     
@@ -143,8 +121,10 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 }
 
 - (void)renameCategory:(DBCategory *)category withName:(NSString *)name {
-
+    
     category.name = name;
+    
+    [self.managedObjectContext refreshObject:category mergeChanges:YES];
     
     [self save];
 }
@@ -152,13 +132,12 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 - (void)deleteCategory:(DBCategory *)category {
     
     [self.managedObjectContext deleteObject:category];
+    
     [self save];
 }
 
 #pragma mark - Core Data stack
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
 - (NSManagedObjectContext *)managedObjectContext {
     
     if (_managedObjectContext) {
@@ -175,8 +154,6 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
     return _managedObjectContext;
 }
 
-// Returns the managed object model for the application.
-// If the model doesn't already exist, it is created from the application's model.
 - (NSManagedObjectModel *)managedObjectModel {
     
     if (_managedObjectModel) {
@@ -189,8 +166,6 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
     return _managedObjectModel;
 }
 
-// Returns the persistent store coordinator for the application.
-// If the coordinator doesn't already exist, it is created and the application's store added to it.
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     
     if (_persistentStoreCoordinator) {
@@ -203,7 +178,11 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
     
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                                   configuration:nil
+                                                             URL:storeURL
+                                                         options:nil
+                                                           error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -239,12 +218,10 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
 
 #pragma mark - Application's Documents directory
 
-// Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory {
     
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
-
 
 - (void)save {
     
@@ -253,7 +230,6 @@ static const NSUInteger DELAY_IN_SECONDS = 3;
     BOOL successful = [self.managedObjectContext save:&error];
     
     if (!successful) {
-        
         [NSException raise:@"Error saving" format:@"Reason : %@", [error localizedDescription]];
     }
 }

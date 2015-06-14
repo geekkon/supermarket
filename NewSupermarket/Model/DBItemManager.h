@@ -19,15 +19,14 @@ typedef void (^ComplitionBlock) (void);
 
 + (DBItemManager *)sharedManager;
 
-- (void)generateData; // items + categories generation
-
-
+//DBItem Methods
 - (DBItem *)createItem;
 - (void)removeItem:(DBItem *)item;
 
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item;
 - (void)addCount:(NSInteger)count toItem:(DBItem *)item withBlock:(ComplitionBlock)block;
 
+// DBCategory Methods
 - (void)createCategoryWithName:(NSString *)name;
 - (void)renameCategory:(DBCategory *)category withName:(NSString *)name;
 - (void)deleteCategory:(DBCategory *)category;

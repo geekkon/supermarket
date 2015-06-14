@@ -13,5 +13,6 @@
 @interface DBItemTableViewController : UITableViewController
 
 @property (strong, nonatomic) DBItem *item;
+@property (nonatomic)         BOOL segueFromBuyController;
 
 @end

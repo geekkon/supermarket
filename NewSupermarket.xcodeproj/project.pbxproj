@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3202A8E51B2A227C00E58C48 /* DBItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3202A8E41B2A227C00E58C48 /* DBItemViewController.m */; };
 		32BD03291B1F148F00C9A325 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03281B1F148F00C9A325 /* main.m */; };
 		32BD032C1B1F148F00C9A325 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD032B1B1F148F00C9A325 /* AppDelegate.m */; };
 		32BD03321B1F148F00C9A325 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BD03301B1F148F00C9A325 /* Main.storyboard */; };
@@ -37,8 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3202A8E31B2A227C00E58C48 /* DBItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBItemViewController.h; sourceTree = "<group>"; };
-		3202A8E41B2A227C00E58C48 /* DBItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBItemViewController.m; sourceTree = "<group>"; };
 		32BD03231B1F148F00C9A325 /* NewSupermarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewSupermarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BD03271B1F148F00C9A325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32BD03281B1F148F00C9A325 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -164,14 +161,12 @@
 			children = (
 				32BD03501B1F1E5800C9A325 /* DBPurchaseTableViewController.h */,
 				32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */,
+				32C2CF821B2701E900BCD8DE /* DBBuyTableViewController.h */,
+				32C2CF831B2701E900BCD8DE /* DBBuyTableViewController.m */,
 				32C2CF7F1B26F01800BCD8DE /* DBItemTableViewController.h */,
 				32C2CF801B26F01800BCD8DE /* DBItemTableViewController.m */,
 				32C2CF7C1B25CBD300BCD8DE /* DBCategoryTableViewController.h */,
 				32C2CF7D1B25CBD300BCD8DE /* DBCategoryTableViewController.m */,
-				32C2CF821B2701E900BCD8DE /* DBBuyTableViewController.h */,
-				32C2CF831B2701E900BCD8DE /* DBBuyTableViewController.m */,
-				3202A8E31B2A227C00E58C48 /* DBItemViewController.h */,
-				3202A8E41B2A227C00E58C48 /* DBItemViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -300,7 +295,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BD032C1B1F148F00C9A325 /* AppDelegate.m in Sources */,
-				3202A8E51B2A227C00E58C48 /* DBItemViewController.m in Sources */,
 				32BD03291B1F148F00C9A325 /* main.m in Sources */,
 				32C2CF651B22EEA900BCD8DE /* NewSupermarket.xcdatamodeld in Sources */,
 				32C2CF751B233B6200BCD8DE /* DBCategory.m in Sources */,
