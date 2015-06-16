@@ -49,7 +49,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fdC-ET-5za" id="QBW-Wq-gfE">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UTp-zd-hBW">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UTp-zd-hBW">
                                                     <rect key="frame" x="8" y="8" width="304" height="29"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <segments>
@@ -64,6 +64,11 @@
                                                     </connections>
                                                 </segmentedControl>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="UTp-zd-hBW" firstAttribute="top" secondItem="QBW-Wq-gfE" secondAttribute="top" constant="8" id="0UX-UX-VLp"/>
+                                                <constraint firstItem="UTp-zd-hBW" firstAttribute="leading" secondItem="QBW-Wq-gfE" secondAttribute="leading" constant="8" id="Gkn-3K-1uL"/>
+                                                <constraint firstAttribute="trailing" secondItem="UTp-zd-hBW" secondAttribute="trailing" constant="8" id="Rcr-Th-ZIa"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                     </tableViewCell>
@@ -97,13 +102,19 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BaH-lp-qc4" id="I8c-1L-AaO">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="05g-L0-qAp">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="05g-L0-qAp">
                                                     <rect key="frame" x="8" y="0.0" width="304" height="48"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="05g-L0-qAp" secondAttribute="bottom" constant="8" id="C4N-iZ-GMJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="05g-L0-qAp" secondAttribute="trailing" constant="8" id="HhK-Bo-EWn"/>
+                                                <constraint firstItem="05g-L0-qAp" firstAttribute="top" secondItem="I8c-1L-AaO" secondAttribute="top" id="UFY-tw-B7h"/>
+                                                <constraint firstItem="05g-L0-qAp" firstAttribute="leading" secondItem="I8c-1L-AaO" secondAttribute="leading" constant="8" id="tEZ-Ph-XRu"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                     </tableViewCell>
@@ -112,13 +123,19 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tlu-UD-F1r" id="37p-TL-buj">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1Q-BB-dG4">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G1Q-BB-dG4">
                                                     <rect key="frame" x="8" y="0.0" width="304" height="136"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="G1Q-BB-dG4" secondAttribute="trailing" constant="8" id="LPL-Q2-yAi"/>
+                                                <constraint firstItem="G1Q-BB-dG4" firstAttribute="leading" secondItem="37p-TL-buj" secondAttribute="leading" constant="8" id="OQM-Uj-nKW"/>
+                                                <constraint firstAttribute="bottom" secondItem="G1Q-BB-dG4" secondAttribute="bottom" id="dLd-fo-vkN"/>
+                                                <constraint firstItem="G1Q-BB-dG4" firstAttribute="top" secondItem="37p-TL-buj" secondAttribute="top" id="wlz-ys-wdS"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                     </tableViewCell>

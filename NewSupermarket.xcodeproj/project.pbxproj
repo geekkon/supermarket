@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		326CF9501B30B6F20069F66F /* DBParentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 326CF94F1B30B6F20069F66F /* DBParentTableViewController.m */; };
 		32BD03291B1F148F00C9A325 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD03281B1F148F00C9A325 /* main.m */; };
 		32BD032C1B1F148F00C9A325 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BD032B1B1F148F00C9A325 /* AppDelegate.m */; };
 		32BD03321B1F148F00C9A325 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BD03301B1F148F00C9A325 /* Main.storyboard */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		326CF94E1B30B6F20069F66F /* DBParentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBParentTableViewController.h; sourceTree = "<group>"; };
+		326CF94F1B30B6F20069F66F /* DBParentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBParentTableViewController.m; sourceTree = "<group>"; };
 		32BD03231B1F148F00C9A325 /* NewSupermarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewSupermarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BD03271B1F148F00C9A325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32BD03281B1F148F00C9A325 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -159,6 +162,8 @@
 		32BD03531B1F1E6700C9A325 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				326CF94E1B30B6F20069F66F /* DBParentTableViewController.h */,
+				326CF94F1B30B6F20069F66F /* DBParentTableViewController.m */,
 				32BD03501B1F1E5800C9A325 /* DBPurchaseTableViewController.h */,
 				32BD03511B1F1E5800C9A325 /* DBPurchaseTableViewController.m */,
 				32C2CF821B2701E900BCD8DE /* DBBuyTableViewController.h */,
@@ -301,6 +306,7 @@
 				32C2CF811B26F01800BCD8DE /* DBItemTableViewController.m in Sources */,
 				32C2CF7E1B25CBD300BCD8DE /* DBCategoryTableViewController.m in Sources */,
 				32BD03521B1F1E5800C9A325 /* DBPurchaseTableViewController.m in Sources */,
+				326CF9501B30B6F20069F66F /* DBParentTableViewController.m in Sources */,
 				32C2CF791B25B2CA00BCD8DE /* DBTableViewCell.m in Sources */,
 				32C2CF841B2701E900BCD8DE /* DBBuyTableViewController.m in Sources */,
 				32BD034E1B1F1D8700C9A325 /* DBItemManager.m in Sources */,

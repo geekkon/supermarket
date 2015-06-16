@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Dmitriy Baklanov. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "DBParentTableViewController.h"
 
-@interface DBPurchaseTableViewController : UITableViewController
+@interface DBPurchaseTableViewController : DBParentTableViewController
 
 @end
