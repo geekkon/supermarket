@@ -22,6 +22,12 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"DBTableViewCell" bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"Cell"];
+    
+    // bug fixing for auto layout self sizing cells
+    [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
+    
+    self.tableView.estimatedRowHeight = 110.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 #pragma mark - Getters
