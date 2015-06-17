@@ -13,6 +13,8 @@
 
 @interface DBParentTableViewController ()
 
+@property (nonatomic) BOOL loaded;
+
 @end
 
 @implementation DBParentTableViewController
@@ -23,11 +25,22 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"DBTableViewCell" bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"Cell"];
     
-    // bug fixing for auto layout self sizing cells
-    [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
-    
     self.tableView.estimatedRowHeight = 110.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.loaded = YES;
+}
+
+// bug fixing for auto layout self sizing cells
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.loaded) {
+        
+        [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
+        
+        self.loaded = NO;
+    }
 }
 
 #pragma mark - Getters

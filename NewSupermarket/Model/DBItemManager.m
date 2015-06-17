@@ -29,10 +29,20 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[DBItemManager alloc] init];
-        manager.queue = dispatch_queue_create("com.supermarket.order.queue", DISPATCH_QUEUE_SERIAL);
     });
     
     return manager;
+}
+
+#pragma mark - Getters
+
+- (dispatch_queue_t)queue {
+    
+    if (!_queue) {
+       _queue = dispatch_queue_create("com.supermarket.order.queue", DISPATCH_QUEUE_SERIAL);
+    }
+ 
+    return _queue;
 }
 
 #pragma mark - DBItem Methods
